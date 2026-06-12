@@ -1,0 +1,20 @@
+{
+  "generated_at": "2026-06-12T22:32:16+00:00",
+  "gateway": "rust-trustdb-ledger",
+  "endpoint": "api.digital-fabric.com (fresh substrate stack)",
+  "state": null,
+  "state_error": "ledger not initialised: call ledger_genesis first",
+  "verify": null,
+  "verify_error": "ledger not initialised: call ledger_genesis first",
+  "sanctions": {
+    "installed": false,
+    "now_iso": "2026-06-12T22:32:16.954Z",
+    "now_ms": 1781303536954
+  },
+  "sanctions_error": null,
+  "latency_ms": {
+    "state": 0.0013570000000000001,
+    "verify": 0.0015609999999999999,
+    "sanctions": 0.004978
+  }
+}

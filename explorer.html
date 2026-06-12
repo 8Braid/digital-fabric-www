@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Network Status — Digital Fabric</title>
+<meta name="description" content="Live status of the TrustDB settlement substrate: gateway health, ledger state, compliance gate, and verification — straight from the running system.">
+<link rel="canonical" href="https://www.digital-fabric.com/explorer.html">
+<style>
+:root{
+  --bg:#0a0e14; --bg2:#0f1520; --panel:#131a28; --line:#1f2a3d;
+  --text:#e8edf5; --muted:#92a0b5; --dim:#5c6b82;
+  --accent:#4da3ff; --accent2:#7ee0c0; --warn:#ffb454;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:920px;margin:0 auto;padding:0 24px}
+nav{position:sticky;top:0;background:rgba(10,14,20,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);z-index:10}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{font-weight:700;letter-spacing:.02em;color:var(--text);font-size:17px}
+.brand span{color:var(--accent)}
+nav ul{display:flex;gap:28px;list-style:none;align-items:center}
+nav ul a{color:var(--muted);font-size:14px}
+header{padding:70px 0 10px}
+h1{font-size:clamp(28px,4vw,40px);letter-spacing:-.02em}
+.lede{margin-top:16px;color:var(--muted);max-width:740px;font-size:16px}
+section{padding:36px 0 80px}
+.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:28px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px}
+.card h3{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:14px;font-weight:600}
+.big{font-size:26px;font-weight:700;letter-spacing:-.01em}
+.big.ok{color:var(--accent2)}
+.big.warn{color:var(--warn)}
+.card .det{margin-top:10px;color:var(--muted);font-size:13.5px}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;word-break:break-all}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;margin-left:10px;vertical-align:middle}
+.p-ok{background:rgba(126,224,192,.12);color:var(--accent2);border:1px solid rgba(126,224,192,.35)}
+.p-warn{background:rgba(255,180,84,.1);color:var(--warn);border:1px solid rgba(255,180,84,.3)}
+.note{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:24px;margin-top:32px;color:var(--muted);font-size:14.5px}
+.asof{margin-top:24px;color:var(--dim);font-size:13px}
+footer{border-top:1px solid var(--line);padding:44px 0;color:var(--dim);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="index.html" style="text-decoration:none"><div class="brand">DIGITAL<span>FABRIC</span></div></a>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="claims.html">Claims</a></li>
+      <li><a href="mailto:ashley@digital-fabric.com">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <h1>Network status <span class="pill p-ok" id="live-pill">SNAPSHOT</span></h1>
+    <p class="lede">Status of the TrustDB settlement substrate, read from the running system over its public API. This page is an automatically refreshed snapshot; the full real-time explorer — watch transfers reach finality and verify post-quantum signatures yourself — ships with the public multi-operator network.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="grid">
+      <div class="card">
+        <h3>Gateway</h3>
+        <div class="big ok" id="gw">—</div>
+        <div class="det">Substrate ledger gateway, fresh stack.<br>Tool latency: <span id="lat" class="mono">—</span></div>
+      </div>
+      <div class="card">
+        <h3>Ledger</h3>
+        <div class="big" id="ledger-status">—</div>
+        <div class="det" id="ledger-det">—</div>
+      </div>
+      <div class="card">
+        <h3>Compliance gate</h3>
+        <div class="big" id="gate-status">—</div>
+        <div class="det" id="gate-det">When installed, transfers without a valid travel-rule envelope structurally cannot commit.</div>
+      </div>
+      <div class="card">
+        <h3>Integrity</h3>
+        <div class="big" id="verify-status">—</div>
+        <div class="det" id="verify-det">Braid verification + state commitment, recomputed from the live system.</div>
+      </div>
+    </div>
+
+    <div class="note" id="state-note" style="display:none"></div>
+
+    <div class="asof">Snapshot generated <span id="asof">—</span> · auto-refreshed hourly from <span class="mono">api.digital-fabric.com</span> · <a href="https://github.com/DIGITAL-FABRIC-AI/digital-fabric-www/blob/main/data/ledger-status.json">raw JSON</a></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>Digital Fabric Inc. (in formation) · Calgary, Alberta, Canada</div>
+    <div><a href="index.html">Home</a> · <a href="claims.html">Claims &amp; verification</a></div>
+  </div>
+</footer>
+
+<script>
+fetch('data/ledger-status.json', {cache: 'no-store'})
+  .then(r => r.json())
+  .then(d => {
+    const $ = id => document.getElementById(id);
+    $('gw').textContent = d.gateway || 'unreachable';
+    if (!d.gateway) $('gw').className = 'big warn';
+    const lat = d.latency_ms || {};
+    const fmt = v => (typeof v === 'number' ? (v < 1 ? '<1 ms' : v.toFixed(1) + ' ms') : '—');
+    $('lat').textContent = 'state ' + fmt(lat.state) + ' · verify ' + fmt(lat.verify);
+    $('asof').textContent = (d.generated_at || '').replace('T',' ').replace('+00:00',' UTC');
+
+    if (d.state) {
+      $('ledger-status').textContent = d.state.accounts + ' accounts';
+      $('ledger-status').className = 'big ok';
+      $('ledger-det').innerHTML = 'Total supply: ' + Number(d.state.total_supply).toLocaleString() +
+        ' base units · braid length ' + d.state.braid_length +
+        '<br>State commitment: <span class="mono">' + String(d.state.state_commitment).slice(0,18) + '…</span>';
+    } else {
+      $('ledger-status').textContent = 'Awaiting genesis';
+      $('ledger-status').className = 'big warn';
+      $('ledger-det').textContent = 'The public ledger instance has not been opened yet — the gateway is live and refusing operations exactly as designed: ' + (d.state_error || '');
+    }
+
+    const s = d.sanctions || {};
+    $('gate-status').textContent = s.installed ? 'Installed' : 'Not installed';
+    $('gate-status').className = 'big ' + (s.installed ? 'ok' : 'warn');
+
+    if (d.verify) {
+      $('verify-status').textContent = d.verify.verified ? 'Verified' : 'FAILED';
+      $('verify-status').className = 'big ' + (d.verify.verified ? 'ok' : 'warn');
+      $('verify-det').innerHTML = 'Braid length ' + d.verify.braid_length +
+        ' · commitment <span class="mono">' + String(d.verify.state_commitment).slice(0,18) + '…</span>';
+    } else {
+      $('verify-status').textContent = 'Awaiting genesis';
+      $('verify-status').className = 'big warn';
+    }
+  })
+  .catch(() => {
+    document.getElementById('gw').textContent = 'snapshot unavailable';
+    document.getElementById('gw').className = 'big warn';
+  });
+</script>
+
+</body>
+</html>
