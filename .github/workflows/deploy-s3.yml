@@ -1,0 +1,42 @@
+name: Deploy to S3 + CloudFront
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '*.html'
+      - 'assets/**'
+      - 'data/**'
+      - 'scripts/**'
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::635298978260:role/digital-fabric-infra-agent
+          aws-region: ca-central-1
+
+      - name: Sync to S3
+        run: |
+          aws s3 sync . s3://digital-fabric-www-static/ \
+            --exclude ".git/*" \
+            --exclude ".github/*" \
+            --exclude ".claude/*" \
+            --cache-control "public,max-age=600" \
+            --delete
+
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id E1N0BQ9H3UGHS8 \
+            --paths "/*"
