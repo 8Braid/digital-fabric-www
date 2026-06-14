@@ -11,6 +11,7 @@ on:
 
 permissions:
   contents: write
+  id-token: write   # for GitHub OIDC -> AWS (publish snapshot to S3)
 
 concurrency:
   group: refresh-ledger-status
@@ -26,13 +27,34 @@ jobs:
         run: python3 scripts/refresh_ledger_status.py
 
       - name: Commit & push if the snapshot changed
+        id: commit
         run: |
           git config user.name "df-status-bot"
           git config user.email "df-status-bot@users.noreply.github.com"
           git add data/ledger-status.json
           if git diff --cached --quiet; then
             echo "snapshot unchanged — nothing to commit"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           git commit -m "chore(status): refresh ledger snapshot"
           git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      # The live site is served from S3 (digital-fabric-www-static) via CloudFront, not
+      # GitHub Pages — so the committed snapshot must also be published to S3. Auth is
+      # GitHub OIDC -> IAM role gha-df-www-status (no long-lived keys); that role may only
+      # write this one object and invalidate this one distribution.
+      - name: Configure AWS credentials (OIDC, no stored keys)
+        if: steps.commit.outputs.changed == 'true'
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::635298978260:role/gha-df-www-status
+          aws-region: us-east-1
+
+      - name: Publish snapshot to S3 + invalidate CloudFront
+        if: steps.commit.outputs.changed == 'true'
+        run: |
+          aws s3 cp data/ledger-status.json s3://digital-fabric-www-static/data/ledger-status.json \
+            --content-type application/json --cache-control "public, max-age=300"
+          aws cloudfront create-invalidation --distribution-id E1N0BQ9H3UGHS8 --paths "/data/ledger-status.json"
