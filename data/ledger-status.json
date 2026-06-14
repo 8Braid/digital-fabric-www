@@ -1,20 +1,34 @@
 {
-  "generated_at": "2026-06-12T22:32:16+00:00",
+  "generated_at": "2026-06-14T00:06:45+00:00",
   "gateway": "rust-trustdb-ledger",
   "endpoint": "api.digital-fabric.com (fresh substrate stack)",
-  "state": null,
-  "state_error": "ledger not initialised: call ledger_genesis first",
-  "verify": null,
-  "verify_error": "ledger not initialised: call ledger_genesis first",
+  "state": {
+    "accounts": 3,
+    "balances": [
+      1000000,
+      1000000,
+      1000000
+    ],
+    "braid_length": 0,
+    "state_commitment": "0baec1954252dfceb964b5266a7ba2ee57289aeec4aba98f4a77f63a8964452e",
+    "total_supply": 3000000
+  },
+  "state_error": null,
+  "verify": {
+    "braid_length": 0,
+    "state_commitment": "0baec1954252dfceb964b5266a7ba2ee57289aeec4aba98f4a77f63a8964452e",
+    "verified": true
+  },
+  "verify_error": null,
   "sanctions": {
     "installed": false,
-    "now_iso": "2026-06-12T22:32:16.954Z",
-    "now_ms": 1781303536954
+    "now_iso": "2026-06-14T00:06:45.786Z",
+    "now_ms": 1781395605786
   },
   "sanctions_error": null,
   "latency_ms": {
-    "state": 0.0013570000000000001,
-    "verify": 0.0015609999999999999,
-    "sanctions": 0.004978
+    "state": 0.009471,
+    "verify": 0.011311,
+    "sanctions": 0.00523
   }
 }

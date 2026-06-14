@@ -1,0 +1,38 @@
+name: Refresh ledger-status snapshot
+
+# Keeps data/ledger-status.json (rendered by explorer.html) in sync with the live
+# gateway. The script is read-only and only commits when the substrate's
+# substantive state actually changes, so an idle ledger produces no commit noise.
+
+on:
+  schedule:
+    - cron: "11 * * * *"   # hourly, at :11
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-ledger-status
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate snapshot from the live gateway
+        run: python3 scripts/refresh_ledger_status.py
+
+      - name: Commit & push if the snapshot changed
+        run: |
+          git config user.name "df-status-bot"
+          git config user.email "df-status-bot@users.noreply.github.com"
+          git add data/ledger-status.json
+          if git diff --cached --quiet; then
+            echo "snapshot unchanged — nothing to commit"
+            exit 0
+          fi
+          git commit -m "chore(status): refresh ledger snapshot"
+          git push
