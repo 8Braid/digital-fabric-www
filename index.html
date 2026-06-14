@@ -24,10 +24,6 @@
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{position:relative;background:var(--bg);color:var(--text);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-/* faint topological-fabric texture across the whole page */
-body::before{content:"";position:fixed;inset:0;z-index:-2;
-  background:url("assets/fabric-pattern.svg") center/1100px auto;
-  opacity:.04;pointer-events:none}
 body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
   background:radial-gradient(1100px 620px at 72% -8%, rgba(75,91,255,.16), transparent 70%),
              radial-gradient(900px 520px at 6% 4%, rgba(138,43,226,.12), transparent 70%),
@@ -39,7 +35,7 @@ nav{position:sticky;top:0;background:rgba(10,14,23,.82);backdrop-filter:blur(14p
 nav .wrap{display:flex;align-items:center;justify-content:space-between;height:66px}
 .brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:.03em;color:var(--text);font-size:17px}
 .brand .gx{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.logo-icon{width:32px;height:32px;border-radius:7px;display:block;flex:none}
+.logo-icon{width:32px;height:32px;border-radius:7px;display:block;flex:none;border:1px solid rgba(255,255,255,0.14);box-shadow:0 0 0 1px rgba(75,91,255,0.25)}
 nav ul{display:flex;gap:28px;list-style:none;align-items:center}
 nav ul a{color:var(--muted);font-size:14px}
 nav ul a:hover{color:var(--text);text-decoration:none}
@@ -101,7 +97,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
   <linearGradient id="lg" x1="0" y1="0" x2="100" y2="0" gradientUnits="userSpaceOnUse">
     <stop offset="0%" stop-color="#8A2BE2"/><stop offset="50%" stop-color="#4B5BFF"/><stop offset="100%" stop-color="#00D1C1"/>
   </linearGradient>
-  <linearGradient id="bgrad" x1="0" y1="0" x2="2400" y2="0" gradientUnits="userSpaceOnUse">
+  <linearGradient id="bgrad" x1="0" y1="0" x2="2400" y2="0" gradientUnits="userSpaceOnUse"><!-- unused, kept for compat -->
     <stop offset="0%" stop-color="#8A2BE2"/><stop offset="50%" stop-color="#4B5BFF"/><stop offset="100%" stop-color="#00D1C1"/>
   </linearGradient>
 </defs></svg>
