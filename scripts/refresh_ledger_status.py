@@ -63,8 +63,20 @@ def main():
     except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, OSError) as e:
         # Leave the last good snapshot in place rather than overwrite it with an
         # error — a transient gateway blip should not blank the public page.
-        print(f"gateway unreachable, keeping last snapshot: {e}", file=sys.stderr)
-        return 1
+        #
+        # Exit 0, not 1: keeping the last snapshot IS this script's intended
+        # behaviour here, so it is not a failure of this job. Returning 1 made
+        # the hourly workflow go red and email on every run for as long as the
+        # gateway stayed unhealthy — one alert per hour for a single ongoing
+        # upstream incident. The condition is still surfaced, as a GitHub
+        # warning annotation on the run (stdout, which is where Actions reads
+        # workflow commands from).
+        #
+        # This script refreshes a snapshot; it is deliberately NOT a gateway
+        # health monitor. Alerting on gateway availability belongs in something
+        # that watches the gateway directly.
+        print(f"::warning::gateway unreachable, keeping last snapshot: {e}")
+        return 0
 
     snapshot = {
         "generated_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
