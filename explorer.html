@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Network Status — Digital Fabric</title>
-<meta name="description" content="Live status of the TrustDB settlement substrate: gateway health, ledger state, compliance gate, and verification — straight from the running system.">
+<title>Network Status: Digital Fabric</title>
+<meta name="description" content="Live status of the 8DB settlement substrate: gateway health, ledger state, compliance gate, and verification, straight from the running system.">
 <meta name="theme-color" content="#0A0E17">
 <link rel="icon" href="assets/app-icon.svg" type="image/svg+xml">
 <link rel="canonical" href="https://www.digital-fabric.com/explorer.html">
@@ -62,7 +62,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
 <header>
   <div class="wrap">
     <h1>Network status <span class="pill p-ok" id="live-pill">SNAPSHOT</span></h1>
-    <p class="lede">Status of the TrustDB settlement substrate, read from the running system over its public API. This page is an automatically refreshed snapshot; the full real-time explorer — watch transfers reach finality and verify post-quantum signatures yourself — ships with the public multi-operator network.</p>
+    <p class="lede">Status of the 8DB settlement substrate, read from the running system over its public API. This page is an automatically refreshed snapshot; the full real-time explorer, watch transfers reach finality and verify post-quantum signatures yourself, ships with the public multi-operator network.</p>
   </div>
 </header>
 
@@ -99,7 +99,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
 
 <footer>
   <div class="wrap">
-    <div>Digital Fabric Inc. (in formation) · Calgary, Alberta, Canada</div>
+    <div>8Braid Inc. · Calgary, Alberta, Canada</div>
     <div><a href="index.html">Home</a> · <a href="claims.html">Claims &amp; verification</a></div>
   </div>
 </footer>
@@ -125,7 +125,7 @@ fetch('data/ledger-status.json', {cache: 'no-store'})
     } else {
       $('ledger-status').textContent = 'Awaiting genesis';
       $('ledger-status').className = 'big warn';
-      $('ledger-det').textContent = 'The public ledger instance has not been opened yet — the gateway is live and refusing operations exactly as designed: ' + (d.state_error || '');
+      $('ledger-det').textContent = 'The public ledger instance has not been opened yet, the gateway is live and refusing operations exactly as designed: ' + (d.state_error || '');
     }
 
     const s = d.sanctions || {};

@@ -1,6 +1,6 @@
 # df-ledger-cors-proxy
 
-A thin, **read-only**, CORS-enabled proxy in front of the TrustDB ledger gateway, so the
+A thin, **read-only**, CORS-enabled proxy in front of the 8DB ledger gateway, so the
 static explorer (GitHub Pages) could read live ledger state from the browser. Only read-only
 tools are allowed (see `ALLOWED_TOOLS` in `lambda_function.py`) — `ledger_genesis` /
 `ledger_transfer` and anything mutating are rejected, so a public browser endpoint can never
