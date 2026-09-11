@@ -157,7 +157,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
       </div>
     </div>
     <div class="quote">
-      "Competitors enforce compliance and integrity with layers. 8DB makes their violation structurally impossible: the math does not produce the output unless the policy was satisfied when the key was derived."
+      "Competitors enforce compliance with layers, and every layer can be removed. 8DB has no layer to remove: the policy is an input to the key. If the policy was not satisfied when the record was written, the key does not derive and the math returns ciphertext."
       <span class="who">the one-sentence argument</span>
     </div>
   </div>
@@ -175,7 +175,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
       </div>
       <div class="card prop">
         <h3>Governance is the data structure</h3>
-        <p>Access control, audit, and compliance are properties of the record itself. A query that would violate policy doesn't get blocked, it structurally cannot produce output.</p>
+        <p>Access control, audit, and compliance are properties of the record itself. A query that violates policy is not blocked by a filter someone can misconfigure. It fails to derive the key, and the answer it gets is ciphertext.</p>
       </div>
       <div class="card prop">
         <h3>Provenance is structural, not logged</h3>
