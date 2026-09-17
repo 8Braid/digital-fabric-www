@@ -16,7 +16,7 @@
 <style>
 :root{
   --bg:#0A0E17; --bg2:#0f1626; --panel:#121a2b; --line:#21304a;
-  --text:#F5F7FA; --muted:#93a3bd; --dim:#5d6f8c;
+  --text:#F5F7FA; --muted:#93a3bd; --dim:#93a3bd;
   --violet:#8A2BE2; --indigo:#4B5BFF; --teal:#00D1C1;
   --accent:#4B5BFF; --accent2:#00D1C1; --warn:#ffb454;
   --grad:linear-gradient(90deg,#8A2BE2,#4B5BFF,#00D1C1);
@@ -30,6 +30,7 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
              radial-gradient(800px 500px at 50% 108%, rgba(0,209,193,.08), transparent 70%)}
 a{color:var(--teal);text-decoration:none}
 a:hover{text-decoration:underline}
+main p a,main td a,footer a{text-decoration:underline;text-underline-offset:3px}
 .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
 nav{position:sticky;top:0;background:rgba(10,14,23,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);z-index:10}
 nav .wrap{display:flex;align-items:center;justify-content:space-between;height:66px}
@@ -120,6 +121,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
   </div>
 </nav>
 
+<main>
 <header>
   <div class="wrap">
     <div class="kicker">Post-Quantum Financial Infrastructure</div>
@@ -246,6 +248,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
   </div>
 </section>
 
+</main>
 <footer>
   <div class="wrap">
     <div>
