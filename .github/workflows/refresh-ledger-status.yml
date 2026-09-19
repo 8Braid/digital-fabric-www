@@ -1,8 +1,8 @@
 name: Refresh ledger-status snapshot
 
 # Keeps data/ledger-status.json (rendered by explorer.html) in sync with the live
-# gateway. The script is read-only and only commits when the substrate's
-# substantive state actually changes, so an idle ledger produces no commit noise.
+# gateway. Every observation is recorded, including unchanged successes and
+# failures. Observation times must advance even when ledger values do not change.
 
 on:
   schedule:
