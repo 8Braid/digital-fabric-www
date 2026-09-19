@@ -1,272 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Digital Fabric: The settlement layer that survives Q-day</title>
-<meta name="description" content="8DB is a post-quantum, compliance-by-construction data substrate. Provenance, access control, and compliance are properties of the data structure itself, not services placed in front of it. Built in Calgary.">
-<meta property="og:title" content="Digital Fabric: The settlement layer that survives Q-day">
-<meta property="og:description" content="Post-quantum financial infrastructure. Compliance enforced by construction, not by layers.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://www.digital-fabric.com">
-<meta property="og:image" content="https://www.digital-fabric.com/assets/app-icon.svg">
-<meta name="theme-color" content="#0A0E17">
-
-<link rel="icon" href="assets/app-icon.svg" type="image/svg+xml">
-<style>
-:root{
-  --bg:#0A0E17; --bg2:#0f1626; --panel:#121a2b; --line:#21304a;
-  --text:#F5F7FA; --muted:#93a3bd; --dim:#93a3bd;
-  --violet:#8A2BE2; --indigo:#4B5BFF; --teal:#00D1C1;
-  --accent:#4B5BFF; --accent2:#00D1C1; --warn:#ffb454;
-  --grad:linear-gradient(90deg,#8A2BE2,#4B5BFF,#00D1C1);
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{position:relative;background:var(--bg);color:var(--text);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
-  background:radial-gradient(1100px 620px at 72% -8%, rgba(75,91,255,.16), transparent 70%),
-             radial-gradient(900px 520px at 6% 4%, rgba(138,43,226,.12), transparent 70%),
-             radial-gradient(800px 500px at 50% 108%, rgba(0,209,193,.08), transparent 70%)}
-a{color:var(--teal);text-decoration:none}
-a:hover{text-decoration:underline}
-main p a,main td a,footer a{text-decoration:underline;text-underline-offset:3px}
-.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
-nav{position:sticky;top:0;background:rgba(10,14,23,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);z-index:10}
-nav .wrap{display:flex;align-items:center;justify-content:space-between;height:66px}
-.brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:.03em;color:var(--text);font-size:17px}
-.brand .gx{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.logo-icon{width:32px;height:32px;border-radius:7px;display:block;flex:none;border:1px solid rgba(255,255,255,0.14);box-shadow:0 0 0 1px rgba(75,91,255,0.25)}
-nav ul{display:flex;gap:28px;list-style:none;align-items:center}
-nav ul a{color:var(--muted);font-size:14px}
-nav ul a:hover{color:var(--text);text-decoration:none}
-.cta{background:var(--grad);color:#06121f !important;padding:8px 16px;border-radius:8px;font-weight:700}
-.cta:hover{filter:brightness(1.08);text-decoration:none}
-header{position:relative;padding:120px 0 96px;overflow:hidden}
-header .wrap{position:relative;z-index:1}
-.kicker{display:inline-block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);border:1px solid var(--line);background:rgba(10,14,23,.5);padding:6px 14px;border-radius:999px;margin-bottom:28px}
-h1{font-size:clamp(34px,5.4vw,58px);line-height:1.12;letter-spacing:-.02em;font-weight:760;max-width:840px}
-h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.sub{margin:26px 0 0;font-size:clamp(17px,2vw,20px);color:var(--muted);max-width:760px}
-.sub strong{color:var(--text);font-weight:600}
-.hero-ctas{margin-top:38px;display:flex;gap:14px;flex-wrap:wrap}
-.btn{display:inline-block;padding:13px 24px;border-radius:10px;font-weight:600;font-size:15px}
-.btn-primary{background:var(--grad);color:#06121f}
-.btn-ghost{border:1px solid var(--line);color:var(--text);background:rgba(10,14,23,.4)}
-.btn:hover{text-decoration:none;filter:brightness(1.1)}
-section{position:relative;z-index:1;padding:84px 0;border-top:1px solid var(--line)}
-.eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:14px}
-h2{font-size:clamp(26px,3.4vw,38px);letter-spacing:-.015em;line-height:1.2;max-width:760px}
-.lede{margin-top:18px;color:var(--muted);max-width:740px;font-size:17px}
-.lede em{font-style:normal;color:var(--teal)}
-.grid{display:grid;gap:18px;margin-top:44px}
-.g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
-.g3{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
-.card{background:linear-gradient(180deg,rgba(18,26,43,.9),rgba(15,22,38,.9));border:1px solid var(--line);border-radius:14px;padding:26px;position:relative;overflow:hidden}
-.card::before{content:"";position:absolute;left:0;top:0;height:3px;width:100%;background:var(--grad);opacity:0;transition:opacity .3s}
-.card:hover::before{opacity:1}
-.card h3{font-size:17px;margin-bottom:10px;letter-spacing:-.01em}
-.card p{color:var(--muted);font-size:14.5px}
-.card .date{display:inline-block;font-size:12px;color:var(--warn);border:1px solid rgba(255,180,84,.3);padding:3px 10px;border-radius:999px;margin-bottom:14px;letter-spacing:.05em}
-.prop{counter-increment:prop}
-.prop h3::before{content:counter(prop,decimal-leading-zero) "  ";background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
-.quote{margin-top:44px;border-left:3px solid transparent;border-image:var(--grad) 1;padding:6px 0 6px 26px;font-size:clamp(19px,2.4vw,24px);line-height:1.45;max-width:820px;letter-spacing:-.01em}
-.quote .who{display:block;margin-top:14px;font-size:14px;color:var(--dim)}
-.status-table{margin-top:40px;width:100%;border-collapse:collapse;font-size:14.5px}
-.status-table th{text-align:left;color:var(--dim);font-weight:600;font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding:0 16px 12px 0}
-.status-table td{border-top:1px solid var(--line);padding:14px 16px 14px 0;vertical-align:top}
-.status-table td:first-child{color:var(--text);font-weight:500;min-width:230px}
-.status-table td:last-child{color:var(--muted)}
-.badge{display:inline-block;font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;white-space:nowrap}
-.b-live{background:rgba(0,209,193,.12);color:var(--teal);border:1px solid rgba(0,209,193,.35)}
-.b-soon{background:rgba(255,180,84,.1);color:var(--warn);border:1px solid rgba(255,180,84,.3)}
-.honest{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:30px;margin-top:44px}
-.honest h3{font-size:16px;margin-bottom:10px}
-.honest p{color:var(--muted);font-size:14.5px}
-footer{position:relative;z-index:1;border-top:1px solid var(--line);padding:54px 0;color:var(--dim);font-size:14px}
-footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
-.contact-box{margin-top:40px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-@media(max-width:640px){nav ul li.hide-m{display:none}.status-table{table-layout:fixed;font-size:13px}.status-table td:first-child{min-width:0}.status-table th,.status-table td{overflow-wrap:anywhere;padding-right:8px}.status-table .badge{white-space:normal}}
-@media(prefers-reduced-motion:reduce){
-}
-</style>
-<link rel="canonical" href="https://www.digital-fabric.com/">
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Digital Fabric | Programmable data and settlement powered by 8DB</title><meta name="description" content="Explore Digital Fabric, a data and settlement foundation in development on 8DB. Node licences are our first proving ground for issuance, transfer and recovery.">
+<meta name="theme-color" content="#0A0E17"><link rel="icon" href="assets/app-icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/foundation.css"><link rel="canonical" href="https://www.digital-fabric.com/">
+<meta property="og:title" content="Digital Fabric | Programmable data and settlement powered by 8DB"><meta property="og:description" content="Explore Digital Fabric, a data and settlement foundation in development on 8DB. Node licences are our first proving ground for issuance, transfer and recovery."><meta property="og:type" content="website"><meta property="og:url" content="https://www.digital-fabric.com/"><meta property="og:image" content="https://www.digital-fabric.com/assets/app-icon.svg"><meta name="twitter:card" content="summary">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://8braid.com/#organization","name":"8Braid Inc.","url":"https://8braid.com/"},{"@type":"WebSite","@id":"https://www.digital-fabric.com/#website","url":"https://www.digital-fabric.com/","name":"Digital Fabric","publisher":{"@id":"https://8braid.com/#organization"}}]}</script>
-</head>
-<body>
-
-<!-- shared SVG gradient defs -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
-  <linearGradient id="lg" x1="0" y1="0" x2="100" y2="0" gradientUnits="userSpaceOnUse">
-    <stop offset="0%" stop-color="#8A2BE2"/><stop offset="50%" stop-color="#4B5BFF"/><stop offset="100%" stop-color="#00D1C1"/>
-  </linearGradient>
-  <linearGradient id="bgrad" x1="0" y1="0" x2="2400" y2="0" gradientUnits="userSpaceOnUse"><!-- unused, kept for compat -->
-    <stop offset="0%" stop-color="#8A2BE2"/><stop offset="50%" stop-color="#4B5BFF"/><stop offset="100%" stop-color="#00D1C1"/>
-  </linearGradient>
-</defs></svg>
-
-<nav>
-  <div class="wrap">
-    <div class="brand">
-      <img class="logo-icon" src="assets/app-icon.svg" alt="Digital Fabric">
-      <span>DIGITAL<span class="gx">FABRIC</span></span>
-    </div>
-    <ul>
-      <li class="hide-m"><a href="#why-now">Why now</a></li>
-      <li class="hide-m"><a href="#substrate">The substrate</a></li>
-      <li class="hide-m"><a href="explorer.html">Network status</a></li>
-      <li class="hide-m"><a href="claims.html">Verify our claims</a></li>
-      <li><a class="cta" href="mailto:ashley@digital-fabric.com">Contact</a></li>
-    </ul>
-  </div>
-</nav>
-
-<main>
-<header>
-  <div class="wrap">
-    <div class="kicker">Post-Quantum Financial Infrastructure</div>
-    <h1>The settlement layer that <em>survives Q-day</em>.</h1>
-    <p class="sub">Every ledger in production today secures yesterday's transactions with cryptography that a quantum computer will retroactively break, and enforces compliance with services bolted on beside the data. <strong>8DB is a data substrate where post-quantum protection and compliance are properties of the storage layer itself.</strong> Not middleware. Not policy. Structure.</p>
-    <div class="hero-ctas">
-      <a class="btn btn-primary" href="mailto:ashley@digital-fabric.com?subject=8DB%20technical%20briefing">Request a technical briefing</a>
-      <a class="btn btn-ghost" href="claims.html">What we claim &amp; how to verify it</a>
-    </div>
-  </div>
-</header>
-
-<section id="why-now">
-  <div class="wrap">
-    <div class="eyebrow">Why now</div>
-    <h2>Four deadlines are converging on the same missing layer.</h2>
-    <div class="grid g2">
-      <div class="card">
-        <span class="date">JANUARY 1, 2027</span>
-        <h3>CNSA 2.0 makes post-quantum mandatory</h3>
-        <p>New US National Security System acquisitions must use FIPS 203/204 (ML-KEM / ML-DSA). Systems that bolted classical crypto into the storage path face a re-architecture, not an upgrade.</p>
-      </div>
-      <div class="card">
-        <span class="date">HAPPENING NOW</span>
-        <h3>Harvest now, decrypt later</h3>
-        <p>Everything stored today under RSA and elliptic-curve cryptography is already being collected for retroactive decryption. For a ledger, the exposure is permanent: the history is the product.</p>
-      </div>
-      <div class="card">
-        <span class="date">JULY 2026</span>
-        <h3>MiCA's Travel Rule is law</h3>
-        <p>EU institutions must prove, not document, that originator and beneficiary information travels with value. Bolt-on compliance programs now have to demonstrate the bolt can't be removed.</p>
-      </div>
-      <div class="card">
-        <span class="date">US LAW, 2025</span>
-        <h3>The GENIUS Act legalized the category</h3>
-        <p>Regulated dollar tokens are now a permitted, supervised business, and the statute requires exactly the controls (sanctions screening, freeze authority, auditability) that retrofitted chains struggle to provide.</p>
-      </div>
-    </div>
-    <div class="quote">
-      "Competitors enforce compliance with layers, and every layer can be removed. 8DB has no layer to remove: the policy is an input to the key. If the policy was not satisfied when the record was written, the key does not derive and the math returns ciphertext."
-      <span class="who">the one-sentence argument</span>
-    </div>
-  </div>
-</section>
-
-<section id="substrate">
-  <div class="wrap">
-    <div class="eyebrow">A substrate, not a chain</div>
-    <h2>Five properties built into the kernel, not placed in front of it.</h2>
-    <p class="lede">8DB is a post-quantum, confidence-native data substrate built in Rust. Crypto settlement is not what it <em>is</em>; it is the first use case the substrate makes possible without the compromises every other approach accepts.</p>
-    <div class="grid g3" style="counter-reset:prop">
-      <div class="card prop">
-        <h3>The storage layer is the cryptographic layer</h3>
-        <p>Every record is written and read under CNSA 2.0-aligned post-quantum protection (ML-KEM-1024 hybrid key encapsulation; ML-DSA-87 signatures). There is no separate encryption service to remove, misconfigure, or migrate.</p>
-      </div>
-      <div class="card prop">
-        <h3>Governance is the data structure</h3>
-        <p>Access control, audit, and compliance are properties of the record itself. A query that violates policy is not blocked by a filter someone can misconfigure. It fails to derive the key, and the answer it gets is ciphertext.</p>
-      </div>
-      <div class="card prop">
-        <h3>Provenance is structural, not logged</h3>
-        <p>Every output is cryptographically anchored to the records that produced it. Ask "why?" of any result and receive a verifiable path back to sources, confidence, and governance state at the time.</p>
-      </div>
-      <div class="card prop">
-        <h3>Selective disclosure is native</h3>
-        <p>Per-observer, per-jurisdiction disclosure is a first-class operation, prove a claim to a regulator without revealing identity or balance to anyone else.</p>
-      </div>
-      <div class="card prop">
-        <h3>Crypto-agility without forks</h3>
-        <p>Signature algorithms are governed, versioned properties of the network. When standards move again, and they will, the network rotates without a hard fork and without changing a single address.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="status">
-  <div class="wrap">
-    <div class="eyebrow">What's live</div>
-    <h2>Built and running, and what we're standing up next.</h2>
-    <table class="status-table">
-      <tr><th>Capability</th><th>Status</th><th>Notes</th></tr>
-      <tr>
-        <td>Post-quantum storage layer</td>
-        <td><span class="badge b-live">SHIPPED</span></td>
-        <td>Production Rust; NIST-standard algorithms, known-answer-test gated.</td>
-      </tr>
-      <tr>
-        <td>Compliance-by-construction gate</td>
-        <td><span class="badge b-live">SHIPPED</span></td>
-        <td>Travel-rule envelope, sanctions anchoring, and auditable history enforced at write time, end to end.</td>
-      </tr>
-      <tr>
-        <td>Federated, fault-tolerant ledger</td>
-        <td><span class="badge b-live">BUILT</span></td>
-        <td>Multi-node replication with deterministic finality; public multi-operator network is being stood up.</td>
-      </tr>
-      <tr>
-        <td>iOS wallet client</td>
-        <td><span class="badge b-live">BUILT</span></td>
-        <td>Thin, honest client over the substrate, integer-exact amounts, compliance envelope on send.</td>
-      </tr>
-      <tr>
-        <td>Development gateway status</td>
-        <td><span class="badge b-soon">SNAPSHOT</span></td>
-        <td><a href="explorer.html">Dated gateway observations</a> with freshness, source and component details.</td>
-      </tr>
-    </table>
-    <div class="honest">
-      <h3>How we make claims</h3>
-      <p>Every public claim on this site is backed by shipped code or it isn't made. Anything aspirational is labeled as such. We maintain an internal "honest gaps" register as an engineering discipline, if a claim can't be tied to running code and a passing test, it moves to that register instead of this page. <a href="claims.html">Read the claims-and-verification page →</a></p>
-    </div>
-  </div>
-</section>
-
-<section id="contact">
-  <div class="wrap">
-    <div class="eyebrow">Who this is for</div>
-    <h2>Regulated institutions that need settlement infrastructure to outlive the cryptography it was born with.</h2>
-    <p class="lede">Stablecoin issuers under the new US framework. Banks piloting tokenized deposits and wholesale settlement. Defense and government programs facing the 2027 post-quantum acquisition deadline. If your ledger has to be defensible in 2035, the storage layer is the decision that matters.</p>
-    <div class="contact-box">
-      <a class="btn btn-primary" href="mailto:ashley@digital-fabric.com?subject=8DB%20technical%20briefing">ashley@digital-fabric.com</a>
-      <span style="color:var(--dim);font-size:14px">Technical briefings and benchmark detail available under NDA.</span>
-    </div>
-  </div>
-</section>
-
-</main>
-<footer>
-  <div class="wrap">
-    <div>
-      <div class="brand" style="margin-bottom:8px">
-        <img class="logo-icon" src="assets/app-icon.svg" alt="" aria-hidden="true">
-        <span>DIGITAL<span class="gx">FABRIC</span></span>
-      </div>
-      8Braid Inc. · Calgary, Alberta, Canada<br>
-      Topology. Security. Infinity. Engineered for Q-day.
-    </div>
-    <div style="text-align:right">
-      <a href="claims.html">Claims &amp; verification</a><br>
-      <a href="mailto:ashley@digital-fabric.com">ashley@digital-fabric.com</a><br>
-      © 2026 Ashley Dunfield. All rights reserved.
-    </div>
-  </div>
-</footer>
-
-<script defer src="/assets/js/measurement.js" data-site="digital-fabric" data-measurement-id="G-C9G5HLJGDB"></script>
-</body>
-</html>
+</head><body><a class="skip" href="#main">Skip to content</a>
+<nav aria-label="Main navigation"><div class="wrap nav-inner">
+<a class="brand" href="./"><img src="assets/app-icon.svg" alt="" width="32" height="32"><span>DIGITAL<span class="brand-accent">FABRIC</span></span></a>
+<ul><li><a href="index.html#substrate">The foundation</a></li><li><a href="index.html#licence-model">Licence model</a></li><li><a href="claims.html">Evidence</a></li><li><a href="explorer.html">Observations</a></li><li><a href="mailto:ashley@digital-fabric.com?subject=Digital%20Fabric%20settlement%20use%20case">Contact</a></li></ul>
+</div></nav><main id="main"><header class="hero"><div class="wrap"><p class="kicker"><strong>Digital Fabric · Powered by 8DB · In development</strong></p><h1>Bring data, rights and settlement together</h1><div class="hero-copy"><p>We&#x27;re building a programmable foundation for issuing and transferring digital rights and value, with the application data and controls those transactions need.</p>
+<p>8DB supplies the database foundation. Digital Fabric is the service built on it. Our first proving ground is our own node licences: buy a licence, give it to another person, or commit several to a wallet that controls their allocation.</p>
+<p class="hero-actions"><a class="button primary" href="#licence-model">Explore the first use case</a> · <a class="button secondary" href="mailto:ashley@digital-fabric.com?subject=Digital%20Fabric%20settlement%20use%20case">Discuss your settlement use case</a></p>
+<p>The broader aim is infrastructure other products can use, from software permissions to settlement applications. Each use needs a defined trust model and evidence that it works.</p></div></div></header><section id="substrate"><div class="wrap"><span id="why-now" class="anchor" aria-hidden="true"></span><h2>A transaction has more to it than a transfer</h2><div class="reading"><p>A useful application also needs to know what a right enables, who may exercise it, which records support the decision and what happened if a response was lost.</p>
+<p>Our aim is to bring those concerns into a consistent data and settlement design. That could reduce the separate records and reconciliation work an application needs while giving owners control over private information.</p>
+<p>Blockchain systems also store data and support programmable transactions. The question we&#x27;re testing is how much of an application&#x27;s storage, permissions, queries and settlement can work coherently through 8DB&#x27;s shared foundation.</p></div></div></section><section id="licence-model"><div class="wrap"><h2>First use case: licences people can hold and give</h2><div class="reading"><p>For 8DB, the intended free tier provides local storage and search. A one-time licence is planned for mesh capability on each node. An unused licence can be given to another person; permission to join a particular mesh remains separate.</p>
+<p>We&#x27;re also developing a funded wallet. Buy ten licences, activate one node and commit nine to one wallet authority. Those nine are backed by the original licences, which cannot also be spent independently.</p>
+<p>The privacy goal is to separate the person who paid from the person who later uses a licence. Recovery and operational records must respect that separation. This remains part of the qualification work, alongside duplicate-spend protection and recovery after interrupted requests.</p>
+<p>Purchase channels, platforms and final prices will be published before sales open. No licences are offered for sale on this page.</p></div><div class="guide" id="licence-guide"><h3>How the 8DB licence model is intended to work</h3><p><strong>Design in development. Purchase channels, final pricing and supported recovery paths will be confirmed before sales open.</strong></p><details><summary>Start with a free local app</summary><div class="detail-body"><p>The planned free tier covers basic local storage and search. Mesh creation, joining and synchronization require the appropriate paid node capability. A licence to use those capabilities is separate from permission to join a particular mesh or read its data.</p></div></details><details><summary>Buy for yourself or someone else</summary><div class="detail-body"><p>The intended one-time purchase covers one node/device installation. You can apply an unused licence to your own node or give it to another person. It is not an unlimited-device purchase.</p>
+<p>A QR code and a manual code are ways to pass the same claim. Copying that claim does not create additional licences. Acceptance needs a confirmed result from the responsible authority; a message being sent is not proof that activation has completed.</p>
+<p>Store purchases must follow the applicable store&#x27;s rights, including restoration. The exact Apple purchase and redemption routes are still being resolved.</p></div></details><details><summary>Hold several licences in a wallet</summary><div class="detail-body"><p>The planned bulk flow is simple to describe: buy ten, use one, and commit nine to a wallet. That wallet&#x27;s authority then controls those nine allocations.</p>
+<p>The distinction matters. Loading the wallet commits the original licences, so they cannot also be spent elsewhere. An available allocation, a reserved claim and an issued activation have different states. An old backup cannot reset those states or restore spent capacity.</p>
+<p>A personal wallet remains separate from a corporate mesh unless you explicitly choose the relevant authority arrangement.</p></div></details><details><summary>Understand what can work offline</summary><div class="detail-body"><p>An already activated node can use its supported offline capabilities. Allocating another licence is a separate operation.</p>
+<p>A local wallet authority may eventually support allocation without public internet access. That still requires a qualified way to reach the authority and prevent conflicting allocations. A copied claim alone cannot establish whether somebody else has already accepted it.</p>
+<p>When the outcome is unknown, the app should let you keep the request and check it later. It should not show a completed activation or restored balance without confirmation.</p></div></details><details><summary>Keep recovery material safe</summary><div class="detail-body"><p>The intended recovery process retrieves the original result. It does not issue a fresh licence because a response was lost.</p>
+<p>A purchase receipt may identify the buyer, but the buyer may have given the licence away. Recovery therefore needs the appropriate private proof. Losing a wallet key or the only usable recovery copy can prevent recovery; a support account cannot simply replace the spending authority.</p>
+<p>Restoring a backup may require checking the current history before allocating more licences. Removing local files does not cancel pending transfers, recall issued licences or refund a payment.</p></div></details><details><summary>Know what payment includes</summary><div class="detail-body"><p>Before any sale, the offer will identify the licence class, number of nodes, price, currency, taxes, channel and material limits. Optional hosted relay or other services would have their own clearly stated terms and charges.</p>
+<p>Refunds follow the selling channel and applicable consumer rights. Refunding a payment and reversing an anonymous allocation are different operations. No sale is offered by this explanatory page.</p>
+<p><a href="mailto:ashley@digital-fabric.com?subject=8DB%20licence%20model">Ask about this model</a> · <a href="claims.html">Check capability status</a></p></div></details></div></div></section><section id="status"><div class="wrap"><h2>Build the foundation through real use</h2><div class="reading"><p>Using Digital Fabric for our own licensing exercises the same problems other issuers face: recording an operation reliably, conserving issued rights, recovering its original result and handling failures without inventing another balance.</p>
+<p>A draft 8DB interface has been exercised by an independent service consumer for atomic updates and recovery after an orderly restart. That is a bounded implementation result. Multi-operator finality, private issuance, disconnected allocation and production service availability require further qualification.</p>
+<p><a href="claims.html">See capability and evidence status</a></p></div></div></section><section id="contact"><div class="wrap"><h2>Where this can lead</h2><div class="reading"><p>The longer-term direction includes other issuers, privately operated deployments and financial settlement applications. These are development directions with additional technical, operational and legal requirements.</p>
+<p>Tell us what you want to issue, what must stay private, who can authorize a transfer and how your system should behave when participants disconnect. That gives us a useful starting point for a technical discussion.</p>
+<p><a href="mailto:ashley@digital-fabric.com?subject=Digital%20Fabric%20settlement%20use%20case">Discuss your use case</a> · <a href="explorer.html">Network observations</a></p></div></div></section></main><footer><div class="wrap footer-inner"><div><a class="brand" href="./">DIGITAL<span class="brand-accent">FABRIC</span></a><p>8Braid Inc. · Calgary, Alberta, Canada</p></div><div><a href="claims.html">Capability and evidence status</a><br><a href="privacy.html">Privacy</a> · <a href="mailto:ashley@digital-fabric.com">Contact</a><p>© 2026 8Braid Inc. All rights reserved.</p></div></div></footer>
+<script defer src="/assets/js/measurement.js" data-site="digital-fabric" data-measurement-id="G-C9G5HLJGDB"></script></body></html>
