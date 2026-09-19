@@ -1,129 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Claims &amp; Verification: Digital Fabric</title>
-<meta name="description" content="Every public claim 8Braid Inc. makes about 8DB, with its verification status. If a claim can't be tied to shipped code and a passing test, it doesn't appear here.">
-<meta name="theme-color" content="#0A0E17">
-<link rel="icon" href="assets/app-icon.svg" type="image/svg+xml">
-
-<style>
-:root{
-  --bg:#0A0E17; --bg2:#0f1626; --panel:#121a2b; --line:#21304a;
-  --text:#F5F7FA; --muted:#93a3bd; --dim:#5d6f8c;
-  --accent:#4B5BFF; --accent2:#00D1C1; --warn:#ffb454;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
-a{color:var(--accent);text-decoration:none}
-a:hover{text-decoration:underline}
-.wrap{max-width:920px;margin:0 auto;padding:0 24px}
-nav{position:sticky;top:0;background:rgba(10,14,20,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);z-index:10}
-nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
-.brand{font-weight:700;letter-spacing:.02em;color:var(--text);font-size:17px}
-.brand span{background:linear-gradient(90deg,#8A2BE2,#4B5BFF,#00D1C1);-webkit-background-clip:text;background-clip:text;color:transparent}
-nav ul{display:flex;gap:28px;list-style:none;align-items:center}
-nav ul a{color:var(--muted);font-size:14px}
-header{padding:80px 0 30px}
-h1{font-size:clamp(30px,4.4vw,44px);letter-spacing:-.02em;line-height:1.15}
-.lede{margin-top:20px;color:var(--muted);font-size:17px;max-width:740px}
-section{padding:40px 0 70px}
-.claim{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px;margin-top:18px}
-.claim h3{font-size:17px;letter-spacing:-.01em;margin-bottom:6px}
-.claim .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
-.badge{display:inline-block;font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;white-space:nowrap}
-.b-live{background:rgba(126,224,192,.12);color:var(--accent2);border:1px solid rgba(126,224,192,.35)}
-.b-soon{background:rgba(255,180,84,.1);color:var(--warn);border:1px solid rgba(255,180,84,.3)}
-.b-nda{background:rgba(77,163,255,.1);color:var(--accent);border:1px solid rgba(77,163,255,.3)}
-.claim p{color:var(--muted);font-size:14.5px}
-.claim .verify{margin-top:12px;font-size:14px;color:var(--text)}
-.claim .verify::before{content:"How to verify: ";color:var(--dim);font-weight:600}
-.note{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:26px;margin-top:36px;color:var(--muted);font-size:14.5px}
-footer{border-top:1px solid var(--line);padding:44px 0;color:var(--dim);font-size:14px}
-footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
-</style>
-<link rel="canonical" href="https://www.digital-fabric.com/claims.html">
-<meta property="og:title" content="Claims &amp; Verification: Digital Fabric"><meta property="og:description" content="Every public claim 8Braid Inc. makes about 8DB, with its verification status. If a claim can't be tied to shipped code and a passing test, it doesn't appear here."><meta property="og:type" content="website"><meta property="og:url" content="https://www.digital-fabric.com/claims.html"><meta name="twitter:card" content="summary">
-</head>
-<body>
-
-<nav>
-  <div class="wrap">
-    <a href="index.html" style="text-decoration:none"><div class="brand">DIGITAL<span>FABRIC</span></div></a>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="mailto:ashley@digital-fabric.com">Contact</a></li>
-    </ul>
-  </div>
-</nav>
-
-<header>
-  <div class="wrap">
-    <h1>What we claim, and how to verify it.</h1>
-    <p class="lede">This page is the public face of an internal engineering discipline: if a statement can't be tied to shipped code and a passing test, it is not made here, it lives in our internal gaps register until it can be. Marketing that can't survive an auditor isn't marketing we want. Anything marked <strong>NDA</strong> is available to qualified counterparties with verification instructions included.</p>
-  </div>
-</header>
-
-<section>
-  <div class="wrap">
-
-    <div class="claim">
-      <div class="row"><h3>The storage layer runs NIST-standard post-quantum cryptography</h3><span class="badge b-live">SHIPPED</span></div>
-      <p>Records are protected with ML-KEM-1024 hybrid key encapsulation and ML-DSA-87 signatures (FIPS 203/204, the CNSA 2.0 algorithms), implemented in production Rust and gated by NIST known-answer tests. Encryption is not a service in front of the database; the database does not operate without it.</p>
-      <div class="verify">Algorithm choices and test methodology walked through in a technical briefing; known-answer-test evidence and code review under NDA.</div>
-    </div>
-
-    <div class="claim">
-      <div class="row"><h3>Compliance is enforced at write time, end to end</h3><span class="badge b-live">SHIPPED</span></div>
-      <p>When a compliance gate is installed, a transfer without a valid envelope (originator/beneficiary identification, jurisdiction, travel-rule attestation) does not execute and produce an audit trail, it structurally fails to commit. Sanctions list state is anchored into the ledger history itself, so "what did the operator know and when" is answerable cryptographically.</p>
-      <div class="verify">Live demonstration against our running gateway, ask for the compliance-gate walkthrough.</div>
-    </div>
-
-    <div class="claim">
-      <div class="row"><h3>Settlement reaches deterministic finality on a federated, fault-tolerant ledger</h3><span class="badge b-live">BUILT</span></div>
-      <p>The ledger replicates across nodes with crash-fault-tolerant consensus and produces a verifiable state commitment per transfer, "final" is a mathematical state, not a probabilistic confirmation count. A public multi-operator network with a live explorer is being stood up now.</p>
-      <div class="verify">State commitments and finality demonstrated live; explorer link will appear on the home page when public.</div>
-    </div>
-
-    <div class="claim">
-      <div class="row"><h3>Signature algorithms can rotate without a fork and without changing addresses</h3><span class="badge b-live">BUILT</span></div>
-      <p>Cryptographic algorithm choice is a governed, versioned property of the network. When standards evolve, the network migrates by governance epoch, no hard fork, no address migration, no flag day. This is the property that makes "survives Q-day" a maintenance plan rather than a slogan.</p>
-      <div class="verify">Rotation demonstrated in the technical briefing.</div>
-    </div>
-
-    <div class="claim">
-      <div class="row"><h3>Per-element provenance and confidence</h3><span class="badge b-live">SHIPPED</span></div>
-      <p>Every stored element carries provenance and a confidence state; outputs are traceable to the inputs that produced them. The system can distinguish "I know X from source S at confidence C" from "X is statistically likely", including saying "I don't know."</p>
-      <div class="verify">Walkthrough against live substrate in briefing.</div>
-    </div>
-
-    <div class="claim">
-      <div class="row"><h3>Performance and scale benchmarks</h3><span class="badge b-nda">UNDER NDA</span></div>
-      <p>We publish benchmark numbers only with full methodology, hardware specification, and reproduction instructions attached, and that package is shared under NDA rather than compressed into a marketing number. If a number can't be reproduced from the document we hand you, we don't hand it to you.</p>
-      <div class="verify">Request the benchmark package: ashley@digital-fabric.com.</div>
-    </div>
-
-    <div class="claim">
-      <div class="row"><h3>Public network explorer</h3><span class="badge b-soon">IN PROGRESS</span></div>
-      <p>A publicly observable multi-node network where anyone can watch transfers reach finality and verify post-quantum signatures. Listed here because we intend to claim it soon, and per our own rules, it doesn't get a "shipped" badge until you can click it.</p>
-      <div class="verify">When live, the explorer itself is the verification.</div>
-    </div>
-
-    <div class="note">
-      <strong>What you will not find on this site:</strong> a token, a token sale, or an invitation to speculate. Digital Fabric sells settlement and compliance infrastructure to regulated institutions. We also do not claim Byzantine fault tolerance, formal certifications (FIPS 140-3 validation, SOC 2), or production custody until those exact words are true, each is on our roadmap register with its real status, available in diligence.
-    </div>
-
-  </div>
-</section>
-
-<footer>
-  <div class="wrap">
-    <div>8Braid Inc. · Calgary, Alberta, Canada</div>
-    <div><a href="index.html">Home</a> · <a href="mailto:ashley@digital-fabric.com">ashley@digital-fabric.com</a></div>
-  </div>
-</footer>
-
-<script defer src="/assets/js/measurement.js" data-site="digital-fabric" data-measurement-id="G-C9G5HLJGDB"></script>
-</body>
-</html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Digital Fabric | Capabilities and evidence</title><meta name="description" content="The Digital Fabric licence-service design, bounded 8DB test evidence, qualification work and availability, reviewed 19 September 2026.">
+<meta name="theme-color" content="#0A0E17"><link rel="icon" href="assets/app-icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/foundation.css"><link rel="canonical" href="https://www.digital-fabric.com/claims.html">
+<meta property="og:title" content="Digital Fabric | Capabilities and evidence"><meta property="og:description" content="The Digital Fabric licence-service design, bounded 8DB test evidence, qualification work and availability, reviewed 19 September 2026."><meta property="og:type" content="website"><meta property="og:url" content="https://www.digital-fabric.com/claims.html"><meta property="og:image" content="https://www.digital-fabric.com/assets/app-icon.svg"><meta name="twitter:card" content="summary">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://8braid.com/#organization","name":"8Braid Inc.","url":"https://8braid.com/"},{"@type":"WebSite","@id":"https://www.digital-fabric.com/#website","url":"https://www.digital-fabric.com/","name":"Digital Fabric","publisher":{"@id":"https://8braid.com/#organization"}}]}</script>
+</head><body><a class="skip" href="#main">Skip to content</a>
+<nav aria-label="Main navigation"><div class="wrap nav-inner">
+<a class="brand" href="./"><img src="assets/app-icon.svg" alt="" width="32" height="32"><span>DIGITAL<span class="brand-accent">FABRIC</span></span></a>
+<ul><li><a href="index.html#substrate">The foundation</a></li><li><a href="index.html#licence-model">Licence model</a></li><li><a href="claims.html">Evidence</a></li><li><a href="explorer.html">Observations</a></li><li><a href="mailto:ashley@digital-fabric.com?subject=Digital%20Fabric%20settlement%20use%20case">Contact</a></li></ul>
+</div></nav><main id="main"><header class="hero compact"><div class="wrap"><p class="kicker"><strong>Capability review · 19 September 2026</strong></p><h1>What is implemented, and what still needs proof</h1><div class="hero-copy"><p>Digital Fabric is being developed as a programmable data and settlement foundation powered by 8DB. Node licensing is its first concrete use case. This page separates the product design, implementation evidence and service availability so you can judge the scope of a technical discussion.</p></div></div></header><section id="evidence-1"><div class="wrap"><h2>The licence service</h2><div class="reading"><div class="table-wrap"><table><caption class="sr-only">Licence service development status</caption><thead><tr><th scope="col">Capability</th><th scope="col">Current evidence and limit</th></tr></thead><tbody>
+<tr><th scope="row">Purchase and issuance</th><td>Existing source has been reviewed. Payment validation, durable fulfillment and recovery are being developed and tested. A source implementation is not a production purchase offer.</td></tr>
+<tr><th scope="row">Private bearer licences</th><td>Separating buyer records from later spending is a design requirement. The intended private issuance protocol and metadata protections still require qualification.</td></tr>
+<tr><th scope="row">Funded wallet</th><td>The design commits existing licences to one authority with a bounded allocation budget. Source funding, concurrent claims, cancellation and recovery must preserve that budget. End-to-end qualification is outstanding.</td></tr>
+<tr><th scope="row">Offline operation</th><td>Using an already activated node offline differs from allocating a new licence without a reachable authority. Each supported mode needs its own stated limits and evidence.</td></tr>
+<tr><th scope="row">Third-party issuer service</th><td>Planned. Public onboarding, operational commitments, pricing and service terms are not yet available.</td></tr>
+</tbody></table></div></div></div></section><section id="evidence-2"><div class="wrap"><h2>A bounded database result</h2><div class="reading"><p>An independent consumer has exercised a draft 8DB API for atomic updates of several records, keeping original request/result data, rejection of stale updates and recovery after an orderly restart. The fixture ran outside the engine source tree at a pinned source version.</p>
+<p>It used synthetic values and bounded batches. It did not qualify power-loss recovery, concurrent remote authorities, cloned wallets, anonymous issuance or multi-operator settlement finality. It is not yet evidence of a supported packaged service release.</p></div></div></section><section id="evidence-3"><div class="wrap"><h2>What “foundation” means here</h2><div class="reading"><p>Our direction is to connect settlement with richer application storage, queries and data controls. Other blockchain systems also store state and can integrate storage and programmable transactions; a claim of universal impossibility would be inaccurate.</p>
+<p>“Layer 0” is an analogy for foundational infrastructure at this stage. Shared security across independent networks and cross-network interoperability would need their own supported protocols and qualification.</p></div></div></section><section id="evidence-4"><div class="wrap"><h2>How to read technical evidence</h2><div class="reading"><p><strong>Implemented</strong> means an identified source version contains the mechanism. <strong>Tested</strong> means a stated check ran against a specified build and environment. <strong>Qualified</strong> means the checks required for a particular use have been completed. <strong>Available</strong> means the supported service or distribution route can actually be used under published terms.</p>
+<p>A passing component test does not establish the whole purchase journey. A reachable gateway does not establish multi-operator finality or production licence fulfillment.</p></div></div></section><section id="evidence-5"><div class="wrap"><h2>Security and cryptography</h2><div class="reading"><p>Algorithm selection, correct implementation, key custody, recovery and independent certification are different questions. The current licence-service review does not establish a combined guarantee of post-quantum protection, anonymous issuance, regulatory compliance and offline double-spend prevention.</p>
+<p>For a technical evaluation, ask for the supported operation, version, test scope and known limits that matter to your deployment. We will distinguish source inspection from executed tests and deployed behavior.</p></div></div></section><section id="evidence-6"><div class="wrap"><h2>Network observations</h2><div class="reading"><p>The <a href="explorer.html">network-status page</a> reports a scoped observation when one is available. Its timestamps and failure states matter: retained historical data must not be presented as a fresh successful check.</p></div></div></section><section id="evidence-7"><div class="wrap"><h2>Broader settlement work</h2><div class="reading"><p>We intend to use the licence service as a practical foundation for wider issuance and settlement. Financial products, regulated custody, general-purpose currency and institution-specific controls require separate evidence and decisions. Their appearance in a roadmap does not make them available services.</p>
+<p><a href="mailto:ashley@digital-fabric.com?subject=Digital%20Fabric%20evidence%20request">Request the relevant technical evidence</a></p></div></div></section></main><footer><div class="wrap footer-inner"><div><a class="brand" href="./">DIGITAL<span class="brand-accent">FABRIC</span></a><p>8Braid Inc. · Calgary, Alberta, Canada</p></div><div><a href="claims.html">Capability and evidence status</a><br><a href="privacy.html">Privacy</a> · <a href="mailto:ashley@digital-fabric.com">Contact</a><p>© 2026 8Braid Inc. All rights reserved.</p></div></div></footer>
+<script defer src="/assets/js/measurement.js" data-site="digital-fabric" data-measurement-id="G-C9G5HLJGDB"></script></body></html>
