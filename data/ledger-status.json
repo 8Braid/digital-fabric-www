@@ -1,34 +1,45 @@
 {
-  "generated_at": "2026-06-14T00:06:45+00:00",
-  "gateway": "rust-trustdb-ledger",
-  "endpoint": "api.digital-fabric.com (fresh substrate stack)",
-  "state": {
-    "accounts": 3,
-    "balances": [
-      1000000,
-      1000000,
-      1000000
-    ],
-    "braid_length": 0,
-    "state_commitment": "0baec1954252dfceb964b5266a7ba2ee57289aeec4aba98f4a77f63a8964452e",
-    "total_supply": 3000000
-  },
-  "state_error": null,
-  "verify": {
-    "braid_length": 0,
-    "state_commitment": "0baec1954252dfceb964b5266a7ba2ee57289aeec4aba98f4a77f63a8964452e",
-    "verified": true
-  },
-  "verify_error": null,
-  "sanctions": {
-    "installed": false,
-    "now_iso": "2026-06-14T00:06:45.786Z",
-    "now_ms": 1781395605786
-  },
-  "sanctions_error": null,
-  "latency_ms": {
-    "state": 0.009471,
-    "verify": 0.011311,
-    "sanctions": 0.00523
+  "schema_version": 2,
+  "checked_at": "2026-09-19T18:52:10+00:00",
+  "last_success_at": "2026-09-19T18:52:10+00:00",
+  "observation_status": "success",
+  "recovered": false,
+  "endpoint": "https://api.digital-fabric.com/api/skills/execute",
+  "components": {
+    "state": {
+      "value": {
+        "accounts": 3,
+        "total_supply": 3000000,
+        "braid_length": 0,
+        "state_commitment": "0baec1954252dfceb964b5266a7ba2ee57289aeec4aba98f4a77f63a8964452e"
+      },
+      "last_success_at": "2026-09-19T18:52:10+00:00",
+      "last_change_at": null,
+      "status": "ok",
+      "error": null,
+      "latency_ms": 0.079511
+    },
+    "verify": {
+      "value": {
+        "braid_length": 0,
+        "state_commitment": "0baec1954252dfceb964b5266a7ba2ee57289aeec4aba98f4a77f63a8964452e",
+        "verified": true
+      },
+      "last_success_at": "2026-09-19T18:52:10+00:00",
+      "last_change_at": null,
+      "status": "ok",
+      "error": null,
+      "latency_ms": 0.014216999999999999
+    },
+    "sanctions": {
+      "value": {
+        "installed": false
+      },
+      "last_success_at": "2026-09-19T18:52:10+00:00",
+      "last_change_at": null,
+      "status": "ok",
+      "error": null,
+      "latency_ms": 0.009448
+    }
   }
 }

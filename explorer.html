@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Network Status: Digital Fabric</title>
-<meta name="description" content="Live status of the 8DB settlement substrate: gateway health, ledger state, compliance gate, and verification, straight from the running system.">
+<meta name="description" content="Dated observations of the Digital Fabric development ledger gateway, with explicit freshness and source information.">
 <meta name="theme-color" content="#0A0E17">
 <link rel="icon" href="assets/app-icon.svg" type="image/svg+xml">
 
 <style>
 :root{
   --bg:#0A0E17; --bg2:#0f1626; --panel:#121a2b; --line:#21304a;
-  --text:#F5F7FA; --muted:#93a3bd; --dim:#5d6f8c;
+  --text:#F5F7FA; --muted:#93a3bd; --dim:#8192ad;
   --accent:#4B5BFF; --accent2:#00D1C1; --warn:#ffb454;
 }
 *{margin:0;padding:0;box-sizing:border-box}
@@ -26,27 +26,29 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 nav ul{display:flex;gap:28px;list-style:none;align-items:center}
 nav ul a{color:var(--muted);font-size:14px}
 header{padding:70px 0 10px}
-h1{font-size:clamp(28px,4vw,40px);letter-spacing:-.02em}
+h1{display:flex;flex-wrap:wrap;gap:12px;align-items:center;font-size:clamp(28px,4vw,40px);letter-spacing:-.02em}
 .lede{margin-top:16px;color:var(--muted);max-width:740px;font-size:16px}
 section{padding:36px 0 80px}
-.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:28px}
+.grid{display:grid;gap:18px;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:28px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px}
 .card h3{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:14px;font-weight:600}
 .big{font-size:26px;font-weight:700;letter-spacing:-.01em}
 .big.ok{color:var(--accent2)}
 .big.warn{color:var(--warn)}
-.card .det{margin-top:10px;color:var(--muted);font-size:13.5px}
+.card .det{overflow-wrap:anywhere;margin-top:10px;color:var(--muted);font-size:13.5px}
 .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;word-break:break-all}
-.pill{display:inline-block;font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;margin-left:10px;vertical-align:middle}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;vertical-align:middle}
+#lat{word-break:normal}
 .p-ok{background:rgba(126,224,192,.12);color:var(--accent2);border:1px solid rgba(126,224,192,.35)}
 .p-warn{background:rgba(255,180,84,.1);color:var(--warn);border:1px solid rgba(255,180,84,.3)}
 .note{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:24px;margin-top:32px;color:var(--muted);font-size:14.5px}
 .asof{margin-top:24px;color:var(--dim);font-size:13px}
 footer{border-top:1px solid var(--line);padding:44px 0;color:var(--dim);font-size:14px}
 footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+@media(max-width:600px){.grid{grid-template-columns:minmax(0,1fr)}nav .wrap{height:auto;min-height:64px;flex-wrap:wrap;gap:16px;padding-top:12px;padding-bottom:12px}nav ul{gap:14px}nav ul a{font-size:13px}.brand{font-size:15px}header{padding-top:44px}}
 </style>
 <link rel="canonical" href="https://www.digital-fabric.com/explorer.html">
-<meta property="og:title" content="Network Status: Digital Fabric"><meta property="og:description" content="Live status of the 8DB settlement substrate: gateway health, ledger state, compliance gate, and verification, straight from the running system."><meta property="og:type" content="website"><meta property="og:url" content="https://www.digital-fabric.com/explorer.html"><meta name="twitter:card" content="summary">
+<meta property="og:title" content="Network Status: Digital Fabric"><meta property="og:description" content="Dated observations of the Digital Fabric development ledger gateway, with explicit freshness and source information."><meta property="og:type" content="website"><meta property="og:url" content="https://www.digital-fabric.com/explorer.html"><meta name="twitter:card" content="summary">
 </head>
 <body>
 
@@ -63,8 +65,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
 
 <header>
   <div class="wrap">
-    <h1>Network status <span class="pill p-ok" id="live-pill">SNAPSHOT</span></h1>
-    <p class="lede">Status of the 8DB settlement substrate, read from the running system over its public API. This page is an automatically refreshed snapshot; the full real-time explorer, watch transfers reach finality and verify post-quantum signatures yourself, ships with the public multi-operator network.</p>
+    <h1>Network status <span class="pill p-warn" id="live-pill">STATUS UNKNOWN</span></h1>
+    <p class="lede">Check the latest observations of the Digital Fabric development ledger gateway, read through its public API. Each result has a timestamp so you can distinguish recent observations from historical data.</p>
   </div>
 </header>
 
@@ -73,29 +75,38 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
     <div class="grid">
       <div class="card">
         <h3>Gateway</h3>
-        <div class="big ok" id="gw">—</div>
-        <div class="det">Substrate ledger gateway, fresh stack.<br>Tool latency: <span id="lat" class="mono">—</span></div>
+        <div class="big warn" id="gw">Unknown</div>
+        <div class="det">Single development gateway.<br>Tool latency: <span id="lat" class="mono">—</span></div>
       </div>
       <div class="card">
         <h3>Ledger</h3>
-        <div class="big" id="ledger-status">—</div>
-        <div class="det" id="ledger-det">—</div>
+        <div class="big warn" id="ledger-status">Unknown</div>
+        <div class="det" id="ledger-det">No valid observation is available.</div>
+        <div class="det" id="ledger-time">Last success: Unknown</div>
       </div>
       <div class="card">
         <h3>Compliance gate</h3>
-        <div class="big" id="gate-status">—</div>
-        <div class="det" id="gate-det">When installed, a transfer without a valid travel-rule envelope fails the gate before commit and leaves an audit record of the refusal.</div>
+        <div class="big warn" id="gate-status">Unknown</div>
+        <div class="det" id="gate-det">No valid observation is available.</div>
+        <div class="det" id="gate-time">Last success: Unknown</div>
       </div>
       <div class="card">
         <h3>Integrity</h3>
-        <div class="big" id="verify-status">—</div>
-        <div class="det" id="verify-det">Braid verification + state commitment, recomputed from the live system.</div>
+        <div class="big warn" id="verify-status">Unknown</div>
+        <div class="det" id="verify-det">No valid observation is available.</div>
+        <div class="det" id="verify-time">Last success: Unknown</div>
       </div>
     </div>
 
-    <div class="note" id="state-note" style="display:none"></div>
+    <div class="note" id="state-note" role="status">A recent complete observation is unavailable. Current gateway status is unknown.</div>
+    <p class="asof">Scope: separate observations from one development gateway. Multi-operator finality and production licence availability require separate qualification.</p>
+    <noscript><p class="note">JavaScript is required to display the saved observations. You can inspect the raw JSON below.</p></noscript>
 
-    <div class="asof">Snapshot generated <span id="asof">—</span> · checked hourly from <span class="mono">api.digital-fabric.com</span> · <a href="https://github.com/DIGITAL-FABRIC-AI/digital-fabric-www/blob/main/data/ledger-status.json">raw JSON</a></div>
+    <div class="asof">Last check: <span id="asof">Unknown</span><br>
+      Last complete success: <span id="last-success">Unknown</span><br>
+      Ledger change last observed: <span id="last-change">Unknown</span><br>
+      Scheduled hourly. Observations older than three hours are stale.<br>
+      Source: <span class="mono">api.digital-fabric.com</span> · <a href="data/ledger-status.json">raw JSON</a></div>
   </div>
 </section>
 
@@ -106,49 +117,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
   </div>
 </footer>
 
-<script>
-fetch('data/ledger-status.json', {cache: 'no-store'})
-  .then(r => r.json())
-  .then(d => {
-    const $ = id => document.getElementById(id);
-    $('gw').textContent = d.gateway || 'unreachable';
-    if (!d.gateway) $('gw').className = 'big warn';
-    const lat = d.latency_ms || {};
-    const fmt = v => (typeof v === 'number' ? (v < 1 ? '<1 ms' : v.toFixed(1) + ' ms') : '—');
-    $('lat').textContent = 'state ' + fmt(lat.state) + ' · verify ' + fmt(lat.verify);
-    $('asof').textContent = (d.generated_at || '').replace('T',' ').replace('+00:00',' UTC');
-
-    if (d.state) {
-      $('ledger-status').textContent = d.state.accounts + ' accounts';
-      $('ledger-status').className = 'big ok';
-      $('ledger-det').innerHTML = 'Total supply: ' + Number(d.state.total_supply).toLocaleString() +
-        ' base units · braid length ' + d.state.braid_length +
-        '<br>State commitment: <span class="mono">' + String(d.state.state_commitment).slice(0,18) + '…</span>';
-    } else {
-      $('ledger-status').textContent = 'Awaiting genesis';
-      $('ledger-status').className = 'big warn';
-      $('ledger-det').textContent = 'The public ledger instance has not been opened yet, the gateway is live and refusing operations exactly as designed: ' + (d.state_error || '');
-    }
-
-    const s = d.sanctions || {};
-    $('gate-status').textContent = s.installed ? 'Installed' : 'Not installed';
-    $('gate-status').className = 'big ' + (s.installed ? 'ok' : 'warn');
-
-    if (d.verify) {
-      $('verify-status').textContent = d.verify.verified ? 'Verified' : 'FAILED';
-      $('verify-status').className = 'big ' + (d.verify.verified ? 'ok' : 'warn');
-      $('verify-det').innerHTML = 'Braid length ' + d.verify.braid_length +
-        ' · commitment <span class="mono">' + String(d.verify.state_commitment).slice(0,18) + '…</span>';
-    } else {
-      $('verify-status').textContent = 'Awaiting genesis';
-      $('verify-status').className = 'big warn';
-    }
-  })
-  .catch(() => {
-    document.getElementById('gw').textContent = 'snapshot unavailable';
-    document.getElementById('gw').className = 'big warn';
-  });
-</script>
+<script defer src="assets/js/ledger-status.js"></script>
 
 <script defer src="/assets/js/measurement.js" data-site="digital-fabric" data-measurement-id="G-C9G5HLJGDB"></script>
 </body>
