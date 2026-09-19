@@ -94,7 +94,7 @@
   // Public Digital Fabric pages keep this persistent control in the footer so
   // it cannot cover an action or reading content on narrow screens. Consent,
   // provider loading and the allowlisted event payloads are unchanged.
-  var settingsHost = site === 'digital-fabric' && !app ? document.querySelector('footer .wrap') : null;
+  var settingsHost = site === 'digital-fabric' && !app ? (document.querySelector('footer .wrap') || document.body) : null;
   if (settingsHost) {
     style.textContent += '#braid-privacy-settings{position:static;min-height:44px;font-size:14px;align-self:flex-start;margin:0}';
     settingsHost.appendChild(settings);
