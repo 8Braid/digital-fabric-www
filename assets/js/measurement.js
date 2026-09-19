@@ -90,7 +90,17 @@
   var panel=document.createElement('section');panel.id='braid-consent';panel.setAttribute('aria-label','Analytics privacy choices');panel.hidden=choice!==null;
   panel.innerHTML='<p><strong>Your analytics choice</strong></p><p>With your permission, we use Google Analytics to understand visits and improve this site. Analytics cookies help measure engagement. We keep form entries and private workspace content out of these measurements.</p><button type="button" data-choice="accepted">Allow analytics</button><button type="button" data-choice="rejected">Decline analytics</button><a href="'+(site==='8braid'||app?'/privacy':'/privacy.html')+'">Analytics privacy notice</a>';
   panel.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){choose(b.dataset.choice);});}); document.body.appendChild(panel);
-  var settings=document.createElement('button');settings.id='braid-privacy-settings';settings.type='button';settings.textContent='Privacy choices';settings.addEventListener('click',function(){panel.hidden=false;panel.querySelector('button').focus();});document.body.appendChild(settings);
+  var settings=document.createElement('button');settings.id='braid-privacy-settings';settings.type='button';settings.textContent='Privacy choices';settings.addEventListener('click',function(){panel.hidden=false;panel.querySelector('button').focus();});
+  // Public Digital Fabric pages keep this persistent control in the footer so
+  // it cannot cover an action or reading content on narrow screens. Consent,
+  // provider loading and the allowlisted event payloads are unchanged.
+  var settingsHost = site === 'digital-fabric' && !app ? document.querySelector('footer .wrap') : null;
+  if (settingsHost) {
+    style.textContent += '#braid-privacy-settings{position:static;min-height:44px;font-size:14px;align-self:flex-start;margin:0}';
+    settingsHost.appendChild(settings);
+  } else {
+    document.body.appendChild(settings);
+  }
   window.braidAnalytics={track:send,page:page};
   // Poll the route only, never inspect application state or query strings.
   setInterval(page,500);
