@@ -24,11 +24,13 @@ observation merely because ledger values are unchanged. Full-site publication
 remains the existing separately triggered S3 workflow. A documentation-only edit
 does not call it.
 
-Rollback for this settings-only efficiency change: restore Pages `build_type`
-to `legacy`, with source branch `main` and path `/`, preserving its existing
-custom domain. Do not delete or recreate the site. Recheck the primary page and
-legacy redirect. Review the next scheduled observation to verify freshness and
-absence of a redundant Pages run before declaring the pilot complete.
+Ashley subsequently prohibited GitHub Actions execution. Do not restore legacy
+Pages builds, add a Pages workflow or dispatch any existing Actions workflow.
+Keep the existing redirect/site settings intact. The still-configured hourly
+collector and S3 publisher require a separately qualified host-scheduler
+migration with least-privilege AWS credentials; preserving their YAML is historical
+source, not authorization to execute it. Check primary reachability and observation
+freshness during that migration. Do not delete or recreate the Pages site.
 
 Coordination: Core task `DP-20260920-EXECUTION` / `recF4ixEIieMto3rr`.
 The live primary homepage differed from repository main at observation time;
